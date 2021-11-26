@@ -4,7 +4,7 @@ import Content from "./components/Content";
 
 function App() {
   return (
-    <div className="App bg-gray-200 flex flex-row  w-full h-screen">
+    <div className="App flex flex-row  w-full h-screen overflow-auto">
       <Sidebar />
       <div className="flex flex-col h-full w-full">
         <Navbar />
