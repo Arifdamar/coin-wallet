@@ -1,16 +1,18 @@
-import Sidebar from "./components/Sidebar";
-import Navbar from "./components/Navbar";
-import Content from "./components/Content";
+import Dashboard from "./components/Dashboard";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Wallet from "./components/Wallet";
 
 function App() {
   return (
-    <div className="App flex flex-row  w-full h-screen overflow-auto">
-      <Sidebar />
-      <div className="flex flex-col h-full w-full">
-        <Navbar />
-        <Content />
+    <Router>
+      <div className="App flex flex-row  w-full h-screen overflow-auto">
+        <Switch>
+          <Route path="/" exact component={Dashboard} />
+          <Route path="/dashboard" component={Dashboard} />
+          <Route path="/wallet" component={Wallet} />
+        </Switch>
       </div>
-    </div>
+    </Router>
   );
 }
 
