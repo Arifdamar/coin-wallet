@@ -1,5 +1,7 @@
 import React, { FunctionComponent } from "react";
 import FameCoins from "./FameCoins";
+import { PieChart } from "react-minimal-pie-chart";
+import CoinChart from "./CoinChart";
 
 interface Props {
   totalBalance?: number;
@@ -13,7 +15,7 @@ const Content: FunctionComponent<Props> = ({
   totalBalanceChangeSign = true,
 }) => {
   return (
-    <div className="bg-white w-full md:w-3/4 xl:w-5/6 px-6 py-6 flex gap-4">
+    <div className="bg-white w-full md:w-3/4 xl:w-5/6 px-6 py-6 flex gap-8">
       <div className="flex flex-col md:w-full lg:w-4/6 gap-8">
         <div className="hidden md:flex md:flex-row md:justify-end md:w-full gap-2">
           <div className="border rounded-full text-amethyst-smoke-900 flex px-3 py-2">
@@ -63,7 +65,23 @@ const Content: FunctionComponent<Props> = ({
             </p>
           </div>
         </div>
-        <div>Portfolio</div>
+        <div className="flex flex-col">
+          <div className="flex justify-between">
+            <p className="font-display font-medium">Portfolio assets</p>
+            <a
+              href="/wallet"
+              className="text-coral-red-500 whitespace-nowrap font-medium"
+            >
+              See all
+            </a>
+          </div>
+          <div className="flex">
+            <div className="w-1/3">
+              <CoinChart />
+            </div>
+            <div className="w-2/3">A</div>
+          </div>
+        </div>
       </div>
       <div id="Famous coins" className="hidden lg:flex lg:w-2/6  h-full">
         <FameCoins />

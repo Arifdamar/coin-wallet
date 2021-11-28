@@ -6,6 +6,20 @@ module.exports = {
       display: ["Roboto", "sans-serif"],
     },
     extend: {
+      backgroundColor: {
+        "amethyst-smoke": {
+          50: "#fafafb",
+          100: "#f5f5f7",
+          200: "#e6e5ec",
+          300: "#d7d5e1",
+          400: "#b9b6ca",
+          500: "#9b97b3",
+          600: "#8c88a1",
+          700: "#747186",
+          800: "#5d5b6b",
+          900: "#4c4a58",
+        },
+      },
       borderColor: (theme) => ({
         "coral-red": {
           50: "#fff5f5",
