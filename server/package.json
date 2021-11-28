@@ -4,14 +4,21 @@
   "description": "",
   "main": "src/server.ts",
   "scripts": {
-    "dev": "yarn build && nodemon",
     "build": "tsc -p .",
-    "test": "jest -i"
+    "dev": "yarn build && nodemon"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^16.11.10",
     "nodemon": "^2.0.15",
     "typescript": "^4.5.2"
+  },
+  "dependencies": {
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "mongoose": "^6.0.13"
   }
 }
