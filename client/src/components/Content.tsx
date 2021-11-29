@@ -2,6 +2,7 @@ import React, { FunctionComponent } from "react";
 import FameCoins from "./FameCoins";
 import CoinChart from "./CoinChart";
 import MyTopCoins from "./MyTopCoins";
+import { Link } from "react-router-dom";
 
 interface Props {
   totalBalance?: number;
@@ -69,12 +70,12 @@ const Content: FunctionComponent<Props> = ({
         <div className="flex flex-col w-full gap-12">
           <div className="flex justify-between">
             <p className="font-display font-medium">Portfolio assets</p>
-            <a
-              href="/wallet"
+            <Link
+              to="/wallet"
               className="text-coral-red-500 whitespace-nowrap font-medium"
             >
               See all
-            </a>
+            </Link>
           </div>
           <div className="flex flex-col gap-6 w-full items-center md:items-start md:flex-row md:justify-between">
             <div className="hidden md:flex md:w-1/3">
