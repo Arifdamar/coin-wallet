@@ -5,6 +5,7 @@ dotenv.config();
 export class Config {
     public PORT: string;
     public mongoUrl: string;
+    public secretKey: string;
 
     constructor() {
         if (!process.env.PORT) {
@@ -16,6 +17,11 @@ export class Config {
             throw new Error("CONNECTION_URL must be specified!");
         }
         this.mongoUrl = process.env.CONNECTION_URL;
+
+        if (!process.env.SECRET_KEY) {
+            throw new Error("SECRET_KEY must be specified!");
+        }
+        this.secretKey = process.env.SECRET_KEY;
     }
 }
 

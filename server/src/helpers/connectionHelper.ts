@@ -14,4 +14,9 @@ export abstract class ConnectionHelper {
   public static async getConnection() {
     return await ConnectionHelper.initalConnection;
   }
+
+  public static async getNativeClient() {
+    const connection = await ConnectionHelper.initalConnection;
+    return connection.connection.getClient();
+  }
 }
