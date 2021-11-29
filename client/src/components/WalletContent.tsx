@@ -9,14 +9,14 @@ interface Props {
   totalBalanceChange?: number;
 }
 
-const Content: FunctionComponent<Props> = ({
+const WalletContent: FunctionComponent<Props> = ({
   totalBalance = 128,
   totalBalanceChange = 1.21,
   totalBalanceChangeSign = true,
 }) => {
   return (
     <div className="bg-white w-full md:w-3/4 xl:w-5/6 px-6 py-6 flex gap-8">
-      <div className="flex flex-col w-full lg:w-4/6 gap-14">
+      <div className="flex flex-col w-full gap-14">
         <div className="hidden md:flex md:flex-row md:justify-end md:w-full gap-2">
           <div className="border rounded-full text-amethyst-smoke-900 flex px-3 py-2">
             <svg
@@ -65,32 +65,9 @@ const Content: FunctionComponent<Props> = ({
             </p>
           </div>
         </div>
-
-        <div className="flex flex-col w-full gap-12">
-          <div className="flex justify-between">
-            <p className="font-display font-medium">Portfolio assets</p>
-            <a
-              href="/wallet"
-              className="text-coral-red-500 whitespace-nowrap font-medium"
-            >
-              See all
-            </a>
-          </div>
-          <div className="flex flex-col gap-6 w-full items-center md:items-start md:flex-row md:justify-between">
-            <div className="hidden md:flex md:w-1/3">
-              <CoinChart />
-            </div>
-            <div className="w-full md:w-2/3">
-              <MyTopCoins />
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="Famous coins" className="hidden lg:flex lg:w-2/6  h-full">
-        <FameCoins />
       </div>
     </div>
   );
 };
 
-export default Content;
+export default WalletContent;

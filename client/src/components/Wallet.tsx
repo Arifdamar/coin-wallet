@@ -1,6 +1,6 @@
 import React, { FunctionComponent } from "react";
 import Sidebar from "./Sidebar";
-import Content from "./Content";
+import WalletContent from "./WalletContent";
 
 interface Props {}
 
@@ -8,7 +8,7 @@ const Wallet: FunctionComponent<Props> = () => {
   return (
     <div className="flex flex-col md:flex-row h-full w-full">
       <Sidebar selectedTab="Wallet" />
-      <Content />
+      <WalletContent />
     </div>
   );
 };
