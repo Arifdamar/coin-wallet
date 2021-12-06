@@ -6,6 +6,7 @@ import User from "../models/user";
 import { SuccessResult, FailureResult } from "../models/result";
 import { userLoginValidator, userRegisterValidator } from "../validation/userValidator";
 import { IUser } from "../interfaces/IUser";
+import Wallet from "../models/wallet";
 
 export class AuthController {
 
@@ -52,10 +53,13 @@ export class AuthController {
         return response.status(400).send(new FailureResult("A user with this email already exists. Try signing in."));
       }
 
+      const userWallet = await Wallet.create({ balance: 0 });
+
       const hashedPassword = await bcrypt.hash(password, 12);
       const result = await new User({
         email,
-        password: hashedPassword
+        password: hashedPassword,
+        walletId: userWallet.id,
       }).save();
 
 
