@@ -11,7 +11,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-userSchema.virtual("user", {
+userSchema.virtual("wallet", {
   ref: "wallets",
   localField: "walletId",
   foreignField: "_id",
