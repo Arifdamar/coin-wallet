@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Request, Response } from "express";
-import CryptoRecord from "../models/userCrypto";
+import UserCrypto from "../models/userCrypto";
 import Exchange, { CryptoExchange } from "../models/exchange";
 
 import { SuccessResult, FailureResult } from "../models/result";
@@ -28,14 +28,14 @@ export class WalletController {
                 return response.status(400).send(new FailureResult(symbol + " does not exist on " + exchange.name));
             }
 
-            const newCryptoRecord = await CryptoRecord.create({
+            const newUserCrypto = await UserCrypto.create({
                 walletId: userWallet.id,
                 exchangeId,
                 symbol,
                 amount
             });
 
-            userWallet.cryptoIds.push(newCryptoRecord.id);
+            userWallet.cryptoIds.push(newUserCrypto.id);
 
             switch (exchange.name) {
                 case CryptoExchange.Binance:

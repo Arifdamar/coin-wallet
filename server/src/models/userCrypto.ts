@@ -25,6 +25,6 @@ userCryptoSchema.virtual("exchange", {
     justOne: true
 });
 
-const CryptoRecord = mongoose.model<IUserCrypto>("usercryptos", userCryptoSchema);
+const UserCrypto = mongoose.model<IUserCrypto>("usercryptos", userCryptoSchema);
 
-export default CryptoRecord;
+export default UserCrypto;

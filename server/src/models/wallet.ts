@@ -10,7 +10,7 @@ const walletSchema = new mongoose.Schema(
 );
 
 walletSchema.virtual("cryptos", {
-    ref: "cryptorecords",
+    ref: "usercryptos",
     localField: "cryptoIds",
     foreignField: "_id",
     justOne: false
