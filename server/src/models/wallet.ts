@@ -16,6 +16,9 @@ walletSchema.virtual("cryptos", {
     justOne: false
 });
 
+walletSchema.set("toObject", { virtuals: true });
+walletSchema.set("toJSON", { virtuals: true });
+
 const Wallet = mongoose.model<IWallet>("wallets", walletSchema);
 
 export default Wallet;

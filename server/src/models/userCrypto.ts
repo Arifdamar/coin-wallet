@@ -25,6 +25,9 @@ userCryptoSchema.virtual("exchange", {
     justOne: true
 });
 
+userCryptoSchema.set("toObject", { virtuals: true });
+userCryptoSchema.set("toJSON", { virtuals: true });
+
 const UserCrypto = mongoose.model<IUserCrypto>("usercryptos", userCryptoSchema);
 
 export default UserCrypto;

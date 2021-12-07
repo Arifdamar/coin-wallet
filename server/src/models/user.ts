@@ -18,6 +18,9 @@ userSchema.virtual("wallet", {
   justOne: true
 });
 
+userSchema.set("toObject", { virtuals: true });
+userSchema.set("toJSON", { virtuals: true });
+
 userSchema.index({ email: "text" });
 
 const User = mongoose.model<IUser>("users", userSchema);
