@@ -7,5 +7,7 @@ const exchangeController = new ExchangeController();
 
 router.post("/create", Auth.authenticate, exchangeController.Create);
 router.post("/refresh", Auth.authenticate, exchangeController.RefreshSymbols);
+router.get("/", Auth.authenticate, exchangeController.List);
+router.get("/:exchangeId", Auth.authenticate, exchangeController.GetOne);
 
 export default router;

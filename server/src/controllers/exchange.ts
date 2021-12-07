@@ -60,4 +60,28 @@ export class ExchangeController {
             return response.status(500).json(new FailureResult("Something went wrong."));
         }
     }
+
+    public async List(request: Request, response: Response) {
+        try {
+            const exchangeList = await Exchange.find();
+
+            return response.status(200).send(new SuccessResult("Exchange List Fetched Successfully!", exchangeList));
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json(new FailureResult("Something went wrong."));
+        }
+    }
+
+    public async GetOne(request: Request, response: Response) {
+        try {
+            const { exchangeId } = request.params;
+
+            const exchange = await Exchange.findById(exchangeId);
+
+            return response.status(200).send(new SuccessResult("Exchange Fetched Successfully!", exchange));
+        } catch (error) {
+            console.log(error);
+            return response.status(500).json(new FailureResult("Something went wrong."));
+        }
+    }
 }
