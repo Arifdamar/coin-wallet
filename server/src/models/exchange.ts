@@ -7,9 +7,9 @@ export enum CryptoExchange {
 
 const exchangeSchema = new mongoose.Schema(
     {
-        name: { type: String, enum: CryptoExchange, index: 1, required: true },
+        name: { type: String, enum: CryptoExchange, unique: true, required: true },
         baseApi: { type: String, index: 1, required: true },
-        symbols: { type: [String], index: 1, required: true }
+        symbols: { type: [String], index: 1, default: [] }
     },
     { timestamps: true }
 );

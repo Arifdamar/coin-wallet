@@ -1,5 +1,7 @@
 import express from "express";
 import authRoutes from "./auth";
+import walletRoutes from "./wallet";
+import exchangeRoutes from "./exchange";
 import { SuccessResult } from "../../models/result";
 
 const router = express.Router();
@@ -9,5 +11,7 @@ router.get("/", (_req: express.Request, res: express.Response) => {
 });
 
 router.use("/auth", authRoutes);
+router.use("/wallet", walletRoutes);
+router.use("/exchange", exchangeRoutes);
 
 export default router;
