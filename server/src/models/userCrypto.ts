@@ -1,29 +1,30 @@
 import mongoose from "mongoose";
-import { ICryptoRecord } from "../interfaces/ICryptoRecord";
+import { IUserCrypto } from "../interfaces/IUserCrypto";
 
-const cryptoRecordSchema = new mongoose.Schema(
+const userCryptoSchema = new mongoose.Schema(
     {
         walletId: { type: mongoose.Schema.Types.ObjectId, index: 1, required: true },
         exchangeId: { type: mongoose.Schema.Types.ObjectId, index: 1, required: true },
-        symbol: { type: String, index: 1, required: true }
+        symbol: { type: String, index: 1, required: true },
+        amount: { type: Number, index: 1, required: true }
     },
     { timestamps: true }
 );
 
-cryptoRecordSchema.virtual("wallet", {
+userCryptoSchema.virtual("wallet", {
     ref: "wallets",
     localField: "walletId",
     foreignField: "_id",
     justOne: true
 });
 
-cryptoRecordSchema.virtual("exchange", {
+userCryptoSchema.virtual("exchange", {
     ref: "exchanges",
     localField: "exchangeId",
     foreignField: "_id",
     justOne: true
 });
 
-const CryptoRecord = mongoose.model<ICryptoRecord>("cryptorecords", cryptoRecordSchema);
+const CryptoRecord = mongoose.model<IUserCrypto>("usercryptos", userCryptoSchema);
 
 export default CryptoRecord;
