@@ -3,9 +3,10 @@ import { UserCryptoController } from "../../controllers/userCrypto";
 import { Auth } from "../../middlewares/auth";
 
 const router = express.Router();
-const walletController = new UserCryptoController();
+const userCryptoController = new UserCryptoController();
 
-router.patch("/:userCryptoId", Auth.authenticate, walletController.Update);
-router.delete("/:userCryptoId", Auth.authenticate, walletController.Delete);
+router.post("/", Auth.authenticate, userCryptoController.Add);
+router.patch("/:userCryptoId", Auth.authenticate, userCryptoController.Update);
+router.delete("/:userCryptoId", Auth.authenticate, userCryptoController.Delete);
 
 export default router;
