@@ -10,6 +10,8 @@ export interface IUserCrypto extends Document {
     exchange: IExchange;
     symbol: string;
     amount: number;
+    firstPrice: number;
+    lastPrice: number;
     updatedAt?: Date;
     createdat?: Date;
 }

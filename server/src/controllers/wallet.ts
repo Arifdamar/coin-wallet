@@ -32,6 +32,8 @@ export class WalletController {
                 walletId: userWallet.id,
                 exchangeId,
                 symbol,
+                firstPrice: 0,
+                lastPrice: 0,
                 amount
             });
 
@@ -43,11 +45,14 @@ export class WalletController {
 
                     console.log(avgPriceResponse.data);
                     const avgPrice = avgPriceResponse.data.price;
-                    userWallet.balance += avgPrice * amount;
+                    newUserCrypto.firstPrice = avgPrice;
+                    newUserCrypto.lastPrice = avgPrice;
+                    await newUserCrypto.save();
+                    userWallet.balance += (avgPrice * amount);
                     break;
 
                 default:
-                    break;
+                    return response.status(400).json(new FailureResult("Unsupported exchange."));
             }
 
             await userWallet.save();

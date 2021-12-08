@@ -6,7 +6,9 @@ const userCryptoSchema = new mongoose.Schema(
         walletId: { type: mongoose.Schema.Types.ObjectId, index: 1, required: true },
         exchangeId: { type: mongoose.Schema.Types.ObjectId, index: 1, required: true },
         symbol: { type: String, index: 1, required: true },
-        amount: { type: Number, index: 1, required: true }
+        amount: { type: Number, index: 1, required: true },
+        firstPrice: { type: Number, index: 1, required: true },
+        lastPrice: { type: Number, index: 1, required: true }
     },
     { timestamps: true }
 );
