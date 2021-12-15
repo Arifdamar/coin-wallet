@@ -7,7 +7,25 @@ import Wallet from "../models/wallet";
 import Exchange, { CryptoExchange } from "../models/exchange";
 
 export class UserCryptoController {
-    public async Add(request: Request, response: Response) {
+    private static async getPrice(url: string, exchangeName: CryptoExchange): Promise<number> {
+        console.log(url);
+        const avgPriceResponse = await axios(url);
+        let avgPrice: number;
+
+        switch (exchangeName) {
+            case CryptoExchange.Binance:
+                avgPrice = +(avgPriceResponse.data.price);
+                break;
+            case CryptoExchange.KuCoin:
+                avgPrice = +(avgPriceResponse.data.data.price);
+        }
+
+        console.log(avgPrice);
+        console.log(typeof avgPrice);
+        return +(avgPrice.toFixed(4));
+    }
+
+    public static async Add(request: Request, response: Response) {
         try {
             const { exchangeName, symbol, amount } = request.body;
 
@@ -27,6 +45,8 @@ export class UserCryptoController {
                 return response.status(400).send(new FailureResult(symbol + " does not exist on " + exchange.name));
             }
 
+            const avgPrice = await UserCryptoController.getPrice(exchange.baseApi + exchange.priceEndpoint + symbol, exchange.name);
+
             const newUserCrypto = await UserCrypto.create({
                 walletId: userWallet.id,
                 exchangeId: exchange._id,
@@ -38,21 +58,10 @@ export class UserCryptoController {
 
             userWallet.cryptoIds.push(newUserCrypto.id);
 
-            switch (exchange.name) {
-                case CryptoExchange.Binance:
-                    const avgPriceResponse = await axios(exchange.baseApi + "/avgPrice?symbol=" + symbol);
-
-                    console.log(avgPriceResponse.data);
-                    const avgPrice = avgPriceResponse.data.price;
-                    newUserCrypto.firstPrice = avgPrice;
-                    newUserCrypto.lastPrice = avgPrice;
-                    await newUserCrypto.save();
-                    userWallet.balance += (avgPrice * amount);
-                    break;
-
-                default:
-                    return response.status(400).json(new FailureResult("Unsupported exchange."));
-            }
+            newUserCrypto.firstPrice = avgPrice;
+            newUserCrypto.lastPrice = avgPrice;
+            await newUserCrypto.save();
+            userWallet.balance += (avgPrice * amount);
 
             await userWallet.save();
 
@@ -67,14 +76,14 @@ export class UserCryptoController {
         }
     }
 
-    public async Update(request: Request, response: Response) {
+    public static async Update(request: Request, response: Response) {
         try {
             const { newAmount } = request.body;
             const { userCryptoId } = request.params;
 
             const userCrypto = await UserCrypto
                 .findById(userCryptoId)
-                .populate("exchange", "name baseApi");
+                .populate("exchange", "name baseApi priceEndpoint");
 
             if (!userCrypto) {
                 return response.status(404).send(new FailureResult("Specified user crypto not found!"));
@@ -91,21 +100,11 @@ export class UserCryptoController {
             }
 
             wallet.balance -= (userCrypto.lastPrice * userCrypto.amount);
+            const avgPrice = await UserCryptoController.getPrice(userCrypto.exchange.baseApi + userCrypto.exchange.priceEndpoint + userCrypto.symbol, userCrypto.exchange.name);
 
-            switch (userCrypto.exchange.name) {
-                case CryptoExchange.Binance:
-                    const avgPriceResponse = await axios(userCrypto.exchange.baseApi + "/avgPrice?symbol=" + userCrypto.symbol);
-
-                    console.log(avgPriceResponse.data);
-                    const avgPrice = avgPriceResponse.data.price;
-                    userCrypto.lastPrice = avgPrice;
-                    wallet.balance += (avgPrice * newAmount);
-                    await wallet.save();
-                    break;
-
-                default:
-                    return response.status(400).json(new FailureResult("Unsupported exchange."));
-            }
+            userCrypto.lastPrice = avgPrice;
+            wallet.balance += (avgPrice * newAmount);
+            await wallet.save();
 
             userCrypto.amount = newAmount;
             await userCrypto.save();
@@ -117,7 +116,7 @@ export class UserCryptoController {
         }
     }
 
-    public async Delete(request: Request, response: Response) {
+    public static async Delete(request: Request, response: Response) {
         try {
             const { userCryptoId } = request.params;
 
@@ -149,5 +148,4 @@ export class UserCryptoController {
             return response.status(500).json(new FailureResult("Something went wrong."));
         }
     }
-
 }
