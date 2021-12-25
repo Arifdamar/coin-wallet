@@ -2,8 +2,15 @@ import axios from 'axios';
 
 const url = 'http://localhost:8081';
 
-export const fetchCoin = () => {
-	axios.get(`${url}/api/exchange/`);
+axios.defaults.withCredentials = true;
+export const fetchExchange = async () => {
+	try {
+		const response = await axios.get(`${url}/api/exchange`);
+		return response;
+	} catch (error: any) {
+		console.log(error.response);
+		return [];
+	}
 };
 
 // Wallet

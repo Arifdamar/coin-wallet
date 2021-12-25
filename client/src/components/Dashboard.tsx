@@ -1,6 +1,7 @@
 import React, { FunctionComponent } from 'react';
-import Sidebar from '../components/Sidebar';
-import Content from '../components/Content';
+import Sidebar from './Sidebar';
+import Content from './Content';
+import { fetchExchange } from '../api/index';
 
 interface Props {}
 
