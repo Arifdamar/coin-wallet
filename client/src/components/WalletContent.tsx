@@ -5,6 +5,7 @@ import MyTopCoins from './MyTopCoins';
 
 import { useDispatch } from 'react-redux';
 import { getUserCoin, addUserCoin } from '../actions/wallet';
+import AddCrypto from './AddCrypto';
 
 interface Props {
 	totalBalance?: number;
@@ -24,7 +25,7 @@ const WalletContent: FunctionComponent<Props> = ({
 	}, [dispatch]);
 
 	return (
-		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-6 py-6 flex gap-8'>
+		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-20 py-6 flex gap-8'>
 			<div className='flex flex-col w-full gap-14'>
 				<div className='hidden md:flex md:flex-row md:justify-end md:w-full gap-2'>
 					<div className='border rounded-full text-amethyst-smoke-900 flex px-3 py-2'>
@@ -76,6 +77,12 @@ const WalletContent: FunctionComponent<Props> = ({
 							{totalBalanceChangeSign ? '+' : '-'}{' '}
 							{totalBalanceChange} %
 						</p>
+					</div>
+				</div>
+				<div className='flex w-full justify-between'>
+					<div>Coinler</div>
+					<div>
+						<AddCrypto />
 					</div>
 				</div>
 			</div>
