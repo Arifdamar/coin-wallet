@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Input, PasswordInput } from '@mantine/core';
 import { useHistory } from 'react-router-dom';
-import { Alert, Notification } from '@mantine/core';
+import { Alert } from '@mantine/core';
 
 const baseURL = 'http://localhost:8081';
 
