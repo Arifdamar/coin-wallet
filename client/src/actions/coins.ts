@@ -1,10 +1,13 @@
 import * as api from '../api';
 
 // Action Creators
-export const getCoins = () => async (dispatch: any) => {
+export const getExchange = () => async (dispatch: any) => {
 	try {
-		const data = await api.fetchCoin();
-		dispatch({ type: 'FETCH_ALL', payload: data });
+		const response: any = await api.fetchExchange();
+		dispatch({
+			type: 'FETCH_EXCHANGES',
+			payload: response.data.data,
+		});
 	} catch (error: any) {
 		console.log(error.message);
 	}

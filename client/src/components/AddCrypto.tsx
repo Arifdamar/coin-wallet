@@ -1,5 +1,8 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Select, Input } from '@mantine/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { getExchange } from '../actions/coins';
+import exchanges from '../reducers/exchanges';
 
 interface Props {}
 
@@ -13,19 +16,20 @@ interface Props {}
 
 //         submit
 
-const symbolData = [
-	{ value: 'usd-try', label: 'usd-try' },
-	{ value: 'btc-usd', label: 'btc-usd' },
-	{ value: 'doge-usd', label: 'doge-usd' },
-];
-
-const exchangeData = [
-	{ value: 'Binance', label: 'Binance' },
-	{ value: 'KuCoin', label: 'KuCoin' },
-	{ value: 'Coinbase', label: 'Coinbase' },
-];
-
 const AddCrypto: FunctionComponent<Props> = () => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getExchange());
+	}, [dispatch]);
+
+	const exchanges: any = useSelector((state: any) => state.exchanges).map(
+		(e: any) => e.name
+	);
+
+	const exchangeCoins: any = useSelector((state: any) => state.exchanges).map(
+		(e: any) => e.symbols
+	);
+
 	return (
 		<div className='bg-green-100 rounded-2xl py-4 px-10 flex flex-col items-start gap-7'>
 			<p className='text-gray-400 text-2xl font-medium whitespace-nowrap'>
@@ -37,14 +41,14 @@ const AddCrypto: FunctionComponent<Props> = () => {
 					placeholder='Pick Your Exchange'
 					searchable
 					clearable
-					data={exchangeData}
+					data={exchanges}
 				/>
 				<Select
 					label='Coin'
 					placeholder='Pick Your Coin'
 					searchable
 					clearable
-					data={symbolData}
+					data={exchangeCoins[0]}
 				/>
 			</div>
 			<div className='w-full flex justify-between gap-20'>

@@ -2,8 +2,8 @@ import axios from 'axios';
 
 const url = 'http://localhost:8081';
 
-export const fetchCoin = () => {
-	axios.get(`${url}/api/exchange/`);
+export const fetchExchange = () => {
+	return axios.get(`${url}/api/exchange`);
 };
 
 // Wallet
