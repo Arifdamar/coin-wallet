@@ -5,7 +5,8 @@
   "main": "src/server.ts",
   "scripts": {
     "build": "tsc -p .",
-    "dev": "yarn build && nodemon"
+    "dev": "yarn build && nodemon",
+    "start": "yarn build && node dist/server.js"
   },
   "author": "",
   "license": "ISC",
