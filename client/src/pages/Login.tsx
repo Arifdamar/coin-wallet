@@ -4,7 +4,7 @@ import { Input, PasswordInput } from '@mantine/core';
 import { useHistory } from 'react-router-dom';
 import { Alert } from '@mantine/core';
 
-const baseURL = 'http://localhost:8081';
+const baseURL = 'https://coin-wallet-8riwk.ondigitalocean.app';
 
 const Login = () => {
 	const [email, setEmail] = useState('');

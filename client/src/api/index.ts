@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:8081';
+const url = 'https://coin-wallet-8riwk.ondigitalocean.app';
 
 axios.defaults.withCredentials = true;
 export const fetchExchange = async () => {

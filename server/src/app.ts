@@ -50,7 +50,7 @@ export class Api {
 				secret: config.secretKey,
 				cookie: {
 					maxAge: 1000 * 60 * 60 * 2,
-					sameSite: true,
+					sameSite: false,
 					secure: false
 				},
 			})
