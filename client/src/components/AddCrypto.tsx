@@ -31,13 +31,20 @@ const AddCrypto: FunctionComponent<Props> = () => {
 	);
 
 	const handleExchangeCoins = () => {
-		const values = exchangeCoins
-			.filter((e: any) => {
-				return e.name === selectedExchange;
-			})
-			.map((e) => e.symbols);
+		if (selectedExchange === null) {
+			return [''];
+		} else {
+			const values = exchangeCoins
+				.filter((e: any) => {
+					return e.name === selectedExchange;
+				})
+				.map((e) => e.symbols);
+			return values[0];
+		}
+	};
 
-		return values[0];
+	const handleExchangeChange = (e: any) => {
+		setSelectedExchange(e);
 	};
 
 	return (
@@ -51,8 +58,7 @@ const AddCrypto: FunctionComponent<Props> = () => {
 					</p>
 					<div className='w-full flex flex-col gap-4'>
 						<Select
-							onChange={setSelectedExchange}
-							value={selectedExchange}
+							onChange={handleExchangeChange}
 							label='Exchange'
 							placeholder='Pick Your Exchange'
 							searchable
