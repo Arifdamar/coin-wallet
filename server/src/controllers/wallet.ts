@@ -6,7 +6,6 @@ import Wallet from "../models/wallet";
 export class WalletController {
     public async Get(request: Request, response: Response) {
         try {
-            console.log(response.locals.user.walletId);
             const wallet = await Wallet
                 .findById(response.locals.user.walletId)
                 .populate({

@@ -12,7 +12,8 @@ const exchangeSchema = new mongoose.Schema(
         baseApi: { type: String, index: 1, required: true },
         symbolListEndpoint: { type: String, index: 1, required: true },
         priceEndpoint: { type: String, index: 1, required: true },
-        symbols: { type: [String], index: 1, default: [] }
+        symbols: { type: [String], index: 1, default: [] },
+        logoUrl: { type: String, index: 1, required: true }
     },
     { timestamps: true }
 );

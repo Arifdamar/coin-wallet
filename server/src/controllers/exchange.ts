@@ -7,13 +7,14 @@ export class ExchangeController {
 
     public async Create(request: Request, response: Response) {
         try {
-            const { name, baseApi, symbolListEndpoint, priceEndpoint } = request.body;
+            const { name, baseApi, symbolListEndpoint, priceEndpoint, logoUrl } = request.body;
 
             const exchange = await Exchange.create({
                 name,
                 baseApi,
                 symbolListEndpoint,
-                priceEndpoint
+                priceEndpoint,
+                logoUrl
             });
 
             return response.status(200).send(new SuccessResult("Exchange Created Successfully!", exchange));

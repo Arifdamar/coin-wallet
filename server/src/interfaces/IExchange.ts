@@ -8,6 +8,7 @@ export interface IExchange extends Document {
     symbolListEndpoint: string;
     priceEndpoint: string;
     symbols: string[];
+    logoUrl: string;
     updatedAt?: Date;
     createdat?: Date;
 }
