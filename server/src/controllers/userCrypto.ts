@@ -5,26 +5,9 @@ import UserCrypto from "../models/userCrypto";
 import { SuccessResult, FailureResult } from "../models/result";
 import Wallet from "../models/wallet";
 import Exchange, { CryptoExchange } from "../models/exchange";
+import { CryptoPriceHelper } from "../helpers/cryptoPriceHelper";
 
 export class UserCryptoController {
-    private static async getPrice(url: string, exchangeName: CryptoExchange): Promise<number> {
-        console.log(url);
-        const avgPriceResponse = await axios(url);
-        let avgPrice: number;
-
-        switch (exchangeName) {
-            case CryptoExchange.Binance:
-                avgPrice = +(avgPriceResponse.data.price);
-                break;
-            case CryptoExchange.KuCoin:
-                avgPrice = +(avgPriceResponse.data.data.price);
-        }
-
-        console.log(avgPrice);
-        console.log(typeof avgPrice);
-        return +(avgPrice.toFixed(4));
-    }
-
     public static async Add(request: Request, response: Response) {
         try {
             const { exchangeName, symbol, amount } = request.body;
@@ -45,7 +28,7 @@ export class UserCryptoController {
                 return response.status(400).send(new FailureResult(symbol + " does not exist on " + exchange.name));
             }
 
-            const avgPrice = await UserCryptoController.getPrice(exchange.baseApi + exchange.priceEndpoint + symbol, exchange.name);
+            const avgPrice = await CryptoPriceHelper.getPrice(exchange.baseApi + exchange.priceEndpoint + symbol, exchange.name);
 
             const newUserCrypto = await UserCrypto.create({
                 walletId: userWallet.id,
@@ -61,7 +44,9 @@ export class UserCryptoController {
             newUserCrypto.firstPrice = avgPrice;
             newUserCrypto.lastPrice = avgPrice;
             await newUserCrypto.save();
-            userWallet.balance += (avgPrice * amount);
+            userWallet.balance += +((avgPrice * amount).toFixed(4));
+            userWallet.balance = +(userWallet.balance.toFixed(4));
+
 
             await userWallet.save();
 
@@ -99,11 +84,13 @@ export class UserCryptoController {
                 return response.status(403).send(new FailureResult("You cannot do that!"));
             }
 
-            wallet.balance -= (userCrypto.lastPrice * userCrypto.amount);
-            const avgPrice = await UserCryptoController.getPrice(userCrypto.exchange.baseApi + userCrypto.exchange.priceEndpoint + userCrypto.symbol, userCrypto.exchange.name);
+            wallet.balance -= +((userCrypto.lastPrice * userCrypto.amount).toFixed(4));
+            wallet.balance = +(wallet.balance.toFixed(4));
+            const avgPrice = await CryptoPriceHelper.getPrice(userCrypto.exchange.baseApi + userCrypto.exchange.priceEndpoint + userCrypto.symbol, userCrypto.exchange.name);
 
             userCrypto.lastPrice = avgPrice;
-            wallet.balance += (avgPrice * newAmount);
+            wallet.balance += +((avgPrice * newAmount).toFixed(4));
+            wallet.balance = +(wallet.balance.toFixed(4));
             await wallet.save();
 
             userCrypto.amount = newAmount;
@@ -136,8 +123,10 @@ export class UserCryptoController {
                 return response.status(403).send(new FailureResult("You cannot do that!"));
             }
 
-            wallet.balance -= (userCrypto.lastPrice * userCrypto.amount);
+            wallet.balance -= +((userCrypto.lastPrice * userCrypto.amount).toFixed(4));
+            wallet.balance = +(wallet.balance.toFixed(4));
             wallet.cryptoIds = wallet.cryptoIds.filter(cryptoId => cryptoId.toString() !== userCrypto.id);
+
             await wallet.save();
 
             await userCrypto.deleteOne();
