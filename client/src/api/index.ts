@@ -15,10 +15,20 @@ export const fetchExchange = async () => {
 };
 
 // Wallet
-export const getUserCoin = () => {
-	axios.get(`${url}/api/wallet`);
+export const getUserCoin = async () => {
+	try {
+		const response = await axios.get(`${url}/api/wallet`);
+		return response;
+	} catch (error: any) {
+		console.log(error.response);
+		return [];
+	}
 };
 
-export const addUserCoin = (coin: any) => {
-	axios.post(`${url}/api/userCrypto`);
+export const addUserCoin = async (coin: any) => {
+	try {
+		await axios.post(`${url}/api/userCrypto`, coin);
+	} catch (error) {
+		console.log(error);
+	}
 };

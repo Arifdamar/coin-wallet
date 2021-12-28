@@ -1,7 +1,8 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Select, Input, Loader } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
-import { getExchange } from '../actions/coins';
+import { getExchange } from '../actions/exchanges';
+import { addUserCoin } from '../actions/wallet';
 
 interface Props {}
 
@@ -17,6 +18,13 @@ interface Props {}
 
 const AddCrypto: FunctionComponent<Props> = () => {
 	const [selectedExchange, setSelectedExchange] = useState<null | string>('');
+
+	const [postCoin, setPostCoin] = useState<object>({
+		exchangeName: '',
+		symbol: '',
+		amount: 0,
+	});
+
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getExchange());
@@ -43,8 +51,21 @@ const AddCrypto: FunctionComponent<Props> = () => {
 		}
 	};
 
+	const handleUSD = (e: any) => {
+		setPostCoin({ ...postCoin, amount: e.target.value });
+	};
+
 	const handleExchangeChange = (e: any) => {
 		setSelectedExchange(e);
+		setPostCoin({ ...postCoin, exchangeName: e });
+	};
+
+	const handleSymbolChange = (e: any) => {
+		setPostCoin({ ...postCoin, symbol: e });
+	};
+
+	const handleSubmit = () => {
+		dispatch(addUserCoin(postCoin));
 	};
 
 	return (
@@ -56,46 +77,57 @@ const AddCrypto: FunctionComponent<Props> = () => {
 					<p className='text-gray-400 text-2xl font-medium whitespace-nowrap'>
 						Add Crypto Asset
 					</p>
-					<div className='w-full flex flex-col gap-4'>
-						<Select
-							onChange={handleExchangeChange}
-							label='Exchange'
-							placeholder='Pick Your Exchange'
-							searchable
-							clearable
-							data={exchanges}
-						/>
-						<Select
-							label='Coin'
-							placeholder='Pick Your Coin'
-							searchable
-							clearable
-							data={
-								selectedExchange === ''
-									? []
-									: handleExchangeCoins()
-							}
-						/>
-					</div>
-					<div className='w-full flex justify-between gap-20'>
-						<Input
-							variant='headless'
-							placeholder=''
-							rightSection='$'
-							styles={{
-								input: {
-									width: '100%',
-									boxSizing: 'border-box',
-									paddingTop: '1rem',
-									paddingBottom: '1rem',
-									textAlign: 'center',
-								},
-							}}
-						/>
-						<button className='py-4 px-10 bg-green-500 text-white hover:bg-green-700 hover:text-gray-300 '>
-							Submit
-						</button>
-					</div>
+					<form
+						onSubmit={handleSubmit}
+						className='flex flex-col items-start gap-7'
+					>
+						<div className='w-full flex flex-col gap-4'>
+							<Select
+								onChange={handleExchangeChange}
+								label='Exchange'
+								placeholder='Pick Your Exchange'
+								searchable
+								clearable
+								nothingFound='Nobody here'
+								data={exchanges}
+							/>
+							<Select
+								label='Coin'
+								placeholder='Pick Your Coin'
+								onChange={handleSymbolChange}
+								searchable
+								clearable
+								data={
+									selectedExchange === ''
+										? []
+										: handleExchangeCoins()
+								}
+							/>
+						</div>
+						<div className='w-full flex justify-between gap-20'>
+							<Input
+								variant='headless'
+								placeholder='Amount'
+								onChange={handleUSD}
+								required
+								styles={{
+									input: {
+										width: '100%',
+										boxSizing: 'border-box',
+										paddingTop: '1rem',
+										paddingBottom: '1rem',
+										textAlign: 'center',
+									},
+								}}
+							/>
+							<button
+								type='submit'
+								className='py-4 px-10 bg-green-500 text-white hover:bg-green-700 hover:text-gray-300 '
+							>
+								Submit
+							</button>
+						</div>
+					</form>
 				</>
 			)}
 		</div>

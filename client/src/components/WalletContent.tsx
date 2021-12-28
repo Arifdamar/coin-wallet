@@ -3,9 +3,10 @@ import FameCoins from './FameCoins';
 import CoinChart from './CoinChart';
 import MyTopCoins from './MyTopCoins';
 
-import { useDispatch } from 'react-redux';
-import { getUserCoin, addUserCoin } from '../actions/wallet';
+import { useDispatch, useSelector } from 'react-redux';
+import { getUserCoin } from '../actions/wallet';
 import AddCrypto from './AddCrypto';
+import Exchange from '../../../server/src/models/exchange';
 
 interface Props {
 	totalBalance?: number;
@@ -18,11 +19,39 @@ const WalletContent: FunctionComponent<Props> = ({
 	totalBalanceChange = 1.21,
 	totalBalanceChangeSign = true,
 }) => {
+	const [crypto, setCrypto] = useState<any>({
+		amount: 0,
+		exchange: '',
+		price: 0,
+		symbol: '',
+	});
+
 	const dispatch = useDispatch();
 
 	useEffect(() => {
 		dispatch(getUserCoin());
 	}, [dispatch]);
+
+	const wallet: any = useSelector((state: any) => {
+		return state.wallet;
+	});
+	console.log('wallet', wallet);
+
+	const balance: number = wallet.balance;
+	const cryptos: any = wallet.cryptos;
+
+	const a: any = cryptos?.map((e: any) => {
+		console.log('e', e);
+		return {
+			amount: e.amount,
+			exchange: e.exchange.name,
+			logo: e.exchange.logoUrl,
+			price: e.lastPrice,
+			symbol: e.symbol,
+		};
+	});
+	console.log('cryptos', cryptos);
+	console.log(a);
 
 	return (
 		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-20 py-6 flex gap-8'>
@@ -71,16 +100,12 @@ const WalletContent: FunctionComponent<Props> = ({
 					</p>
 					<div className='flex items-end gap-4'>
 						<p className='font-display font-medium text-4xl'>
-							$ {totalBalance}{' '}
-						</p>
-						<p className='font-display text-2xl text-gray-400'>
-							{totalBalanceChangeSign ? '+' : '-'}{' '}
-							{totalBalanceChange} %
+							$ {balance}{' '}
 						</p>
 					</div>
 				</div>
 				<div className='flex w-full justify-between'>
-					<div>Coinler</div>
+					<div></div>
 					<div>
 						<AddCrypto />
 					</div>

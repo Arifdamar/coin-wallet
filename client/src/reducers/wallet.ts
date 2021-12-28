@@ -1,11 +1,11 @@
-const wallet = (coins = [], action: any) => {
+const wallet = (wallet = [], action: any) => {
 	switch (action.type) {
 		case 'FETCH_USER_COIN':
 			return action.payload;
-		case 'CREATE':
-			return [...coins, action.payload];
+		case 'ADD':
+			return [...wallet, action.payload];
 		default:
-			return coins;
+			return wallet;
 	}
 };
 
