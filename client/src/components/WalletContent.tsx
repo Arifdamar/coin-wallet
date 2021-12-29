@@ -7,24 +7,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserCoin } from '../actions/wallet';
 import AddCrypto from './AddCrypto';
 import Exchange from '../../../server/src/models/exchange';
+import UserCoin from './UserCoin';
 
-interface Props {
-	totalBalance?: number;
-	totalBalanceChangeSign?: boolean;
-	totalBalanceChange?: number;
-}
+interface Props {}
 
-const WalletContent: FunctionComponent<Props> = ({
-	totalBalance = 128,
-	totalBalanceChange = 1.21,
-	totalBalanceChangeSign = true,
-}) => {
-	const [crypto, setCrypto] = useState<any>({
-		amount: 0,
-		exchange: '',
-		price: 0,
-		symbol: '',
-	});
+const WalletContent: FunctionComponent<Props> = ({}) => {
+	const [balance, setBalance] = useState<number>(0);
 
 	const dispatch = useDispatch();
 
@@ -37,25 +25,24 @@ const WalletContent: FunctionComponent<Props> = ({
 	});
 	console.log('wallet', wallet);
 
-	const balance: number = wallet.balance;
-	const cryptos: any = wallet.cryptos;
-
-	const a: any = cryptos?.map((e: any) => {
+	const cryptos: any = wallet.cryptos?.map((e: any) => {
 		console.log('e', e);
 		return {
 			amount: e.amount,
 			exchange: e.exchange.name,
 			logo: e.exchange.logoUrl,
 			price: e.lastPrice,
+			firstPrice: e.firstPrice,
 			symbol: e.symbol,
+			id: e.id,
 		};
 	});
+
 	console.log('cryptos', cryptos);
-	console.log(a);
 
 	return (
 		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-20 py-6 flex gap-8'>
-			<div className='flex flex-col w-full gap-14'>
+			<div className='flex flex-col w-full gap-14 h-full'>
 				<div className='hidden md:flex md:flex-row md:justify-end md:w-full gap-2'>
 					<div className='border rounded-full text-amethyst-smoke-900 flex px-3 py-2'>
 						<svg
@@ -104,8 +91,20 @@ const WalletContent: FunctionComponent<Props> = ({
 						</p>
 					</div>
 				</div>
-				<div className='flex w-full justify-between'>
-					<div></div>
+				<div className='flex w-full justify-between gap-12 max-h-96'>
+					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto'>
+						{cryptos?.map((e: any) => (
+							<UserCoin
+								key={e.id}
+								amount={e.amount}
+								logo={e.logo}
+								price={e.price}
+								symbol={e.symbol}
+								exchange={e.exchange}
+								id={e.id}
+							/>
+						))}
+					</div>
 					<div>
 						<AddCrypto />
 					</div>

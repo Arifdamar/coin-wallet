@@ -32,3 +32,11 @@ export const addUserCoin = async (coin: any) => {
 		console.log(error);
 	}
 };
+
+export const deleteCoin = async (id: string) => {
+	try {
+		await axios.delete(`${url}/api/userCrypto/${id}`);
+	} catch (error) {
+		console.log('delete error: ', error);
+	}
+};

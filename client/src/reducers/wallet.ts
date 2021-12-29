@@ -4,6 +4,9 @@ const wallet = (wallet = [], action: any) => {
 			return action.payload;
 		case 'ADD':
 			return [...wallet, action.payload];
+		case 'DELETE':
+			return wallet.filter((coin: any) => coin.id !== action.payload);
+
 		default:
 			return wallet;
 	}

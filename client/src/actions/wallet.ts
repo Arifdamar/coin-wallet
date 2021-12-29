@@ -19,3 +19,13 @@ export const addUserCoin = (coin: any) => async (dispatch: any) => {
 		console.log(error.message);
 	}
 };
+
+export const deleteCoin = (id: string) => async (dispatch: any) => {
+	try {
+		await api.deleteCoin(id);
+
+		dispatch({ type: 'DELETE', payload: id });
+	} catch (error) {
+		console.log('Delete Error: ', error);
+	}
+};

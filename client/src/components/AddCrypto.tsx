@@ -3,6 +3,7 @@ import { Select, Input, Loader } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExchange } from '../actions/exchanges';
 import { addUserCoin } from '../actions/wallet';
+import exchanges from '../reducers/exchanges';
 
 interface Props {}
 
@@ -15,20 +16,24 @@ interface Props {}
 //         amount - usd olarak
 
 //         submit
+const initialFormState = {
+	exchangeName: ' ',
+	symbol: ' ',
+	amount: ' ',
+};
 
 const AddCrypto: FunctionComponent<Props> = () => {
 	const [selectedExchange, setSelectedExchange] = useState<null | string>('');
 
-	const [postCoin, setPostCoin] = useState<object>({
-		exchangeName: '',
-		symbol: '',
-		amount: 0,
-	});
+	const [postCoin, setPostCoin] = useState<any>(initialFormState);
 
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getExchange());
-	}, [dispatch]);
+		if (postCoin) setPostCoin(postCoin);
+
+		setPostCoin(initialFormState);
+	}, [dispatch, postCoin]);
 
 	const exchanges: Array<any> = useSelector(
 		(state: any) => state.exchanges
@@ -64,8 +69,11 @@ const AddCrypto: FunctionComponent<Props> = () => {
 		setPostCoin({ ...postCoin, symbol: e });
 	};
 
-	const handleSubmit = () => {
+	const handleSubmit = async (e: any) => {
+		e.preventDefault();
 		dispatch(addUserCoin(postCoin));
+
+		setPostCoin(initialFormState);
 	};
 
 	return (
@@ -77,15 +85,19 @@ const AddCrypto: FunctionComponent<Props> = () => {
 					<p className='text-gray-400 text-2xl font-medium whitespace-nowrap'>
 						Add Crypto Asset
 					</p>
+
 					<form
 						onSubmit={handleSubmit}
+						autoComplete='off'
+						noValidate
+						action='POST'
 						className='flex flex-col items-start gap-7'
 					>
 						<div className='w-full flex flex-col gap-4'>
 							<Select
 								onChange={handleExchangeChange}
 								label='Exchange'
-								placeholder='Pick Your Exchange'
+								value={postCoin.exchange}
 								searchable
 								clearable
 								nothingFound='Nobody here'
