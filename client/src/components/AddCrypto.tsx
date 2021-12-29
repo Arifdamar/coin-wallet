@@ -15,25 +15,19 @@ interface Props {}
 
 //         amount - usd olarak
 
-//         submit
-const initialFormState = {
-	exchangeName: ' ',
-	symbol: ' ',
-	amount: ' ',
-};
-
 const AddCrypto: FunctionComponent<Props> = () => {
 	const [selectedExchange, setSelectedExchange] = useState<null | string>('');
 
-	const [postCoin, setPostCoin] = useState<any>(initialFormState);
+	const [postCoin, setPostCoin] = useState<any>({
+		exchangeName: '',
+		symbol: '',
+		amount: 0,
+	});
 
 	const dispatch = useDispatch();
 	useEffect(() => {
 		dispatch(getExchange());
-		if (postCoin) setPostCoin(postCoin);
-
-		setPostCoin(initialFormState);
-	}, [dispatch, postCoin]);
+	}, [dispatch]);
 
 	const exchanges: Array<any> = useSelector(
 		(state: any) => state.exchanges
@@ -72,8 +66,6 @@ const AddCrypto: FunctionComponent<Props> = () => {
 	const handleSubmit = async (e: any) => {
 		e.preventDefault();
 		dispatch(addUserCoin(postCoin));
-
-		setPostCoin(initialFormState);
 	};
 
 	return (
@@ -88,9 +80,6 @@ const AddCrypto: FunctionComponent<Props> = () => {
 
 					<form
 						onSubmit={handleSubmit}
-						autoComplete='off'
-						noValidate
-						action='POST'
 						className='flex flex-col items-start gap-7'
 					>
 						<div className='w-full flex flex-col gap-4'>
@@ -98,7 +87,6 @@ const AddCrypto: FunctionComponent<Props> = () => {
 								onChange={handleExchangeChange}
 								label='Exchange'
 								value={postCoin.exchange}
-								searchable
 								clearable
 								nothingFound='Nobody here'
 								data={exchanges}

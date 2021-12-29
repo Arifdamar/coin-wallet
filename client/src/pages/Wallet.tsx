@@ -1,4 +1,4 @@
-import React, { FunctionComponent, memo } from 'react';
+import React, { FunctionComponent } from 'react';
 import Sidebar from '../components/Sidebar';
 import WalletContent from '../components/WalletContent';
 
@@ -13,4 +13,4 @@ const Wallet: FunctionComponent<Props> = () => {
 	);
 };
 
-export default memo(Wallet);
+export default Wallet;
