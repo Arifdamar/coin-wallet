@@ -12,8 +12,6 @@ import UserCoin from './UserCoin';
 interface Props {}
 
 const WalletContent: FunctionComponent<Props> = ({}) => {
-	const [balance, setBalance] = useState<number>(0);
-
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -37,7 +35,6 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 			id: e.id,
 		};
 	});
-
 	console.log('cryptos', cryptos);
 
 	return (
@@ -87,7 +84,7 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 					</p>
 					<div className='flex items-end gap-4'>
 						<p className='font-display font-medium text-4xl'>
-							$ {balance}{' '}
+							$ {wallet.balance}{' '}
 						</p>
 					</div>
 				</div>
