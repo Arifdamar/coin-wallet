@@ -1,12 +1,8 @@
 import React, { FunctionComponent, useState, useEffect } from 'react';
-import FameCoins from './FameCoins';
-import CoinChart from './CoinChart';
-import MyTopCoins from './MyTopCoins';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { getUserCoin } from '../actions/wallet';
+import { getUserCoin, deleteCoin, addUserCoin } from '../actions/wallet';
 import AddCrypto from './AddCrypto';
-import Exchange from '../../../server/src/models/exchange';
 import UserCoin from './UserCoin';
 
 interface Props {}
@@ -14,17 +10,11 @@ interface Props {}
 const WalletContent: FunctionComponent<Props> = ({}) => {
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		dispatch(getUserCoin());
-	}, [dispatch]);
-
 	const wallet: any = useSelector((state: any) => {
 		return state.wallet;
 	});
-	console.log('wallet', wallet);
 
 	const cryptos: any = wallet.cryptos?.map((e: any) => {
-		console.log('e', e);
 		return {
 			amount: e.amount,
 			exchange: e.exchange.name,
@@ -35,7 +25,27 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 			id: e.id,
 		};
 	});
-	console.log('cryptos', cryptos);
+	useEffect(() => {
+		dispatch(getUserCoin());
+	}, [dispatch, wallet]);
+
+	const handleDeleteCoin = (id: string) => {
+		if (window.confirm('Are you sure to delete your coin?')) {
+			dispatch(deleteCoin(id));
+		}
+	};
+
+	const handleAddingCoin = (coin: any) => {
+		console.log(
+			'a: ',
+			coin.exchangeName,
+			'b: ',
+			coin.symbol,
+			'c',
+			coin.amount
+		);
+		dispatch(addUserCoin(coin));
+	};
 
 	return (
 		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-20 py-6 flex gap-8'>
@@ -90,20 +100,16 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 				</div>
 				<div className='flex w-full justify-between gap-12 max-h-96'>
 					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto'>
-						{cryptos?.map((e: any) => (
+						{cryptos?.map((coin: any) => (
 							<UserCoin
-								key={e.id}
-								amount={e.amount}
-								logo={e.logo}
-								price={e.price}
-								symbol={e.symbol}
-								exchange={e.exchange}
-								id={e.id}
+								coin={coin}
+								handleDeleteEvent={handleDeleteCoin}
+								key={coin.id}
 							/>
 						))}
 					</div>
 					<div>
-						<AddCrypto />
+						<AddCrypto handleAddingCoin={handleAddingCoin} />
 					</div>
 				</div>
 			</div>

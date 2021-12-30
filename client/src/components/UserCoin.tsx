@@ -1,90 +1,67 @@
 import React, { FunctionComponent, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteCoin } from '../actions/wallet';
 
 interface Props {
-	amount: number;
-	logo: string;
-	price: number;
-	symbol: string;
-	exchange: string;
-	id: string;
+	coin: any;
+	handleDeleteEvent: any;
 }
 
-const UserCoin: FunctionComponent<Props> = ({
-	amount,
-	logo,
-	price,
-	symbol,
-	exchange,
-	id,
-}) => {
-	const [deleted, setDeleted] = useState<Boolean>(false);
-	const dispatch = useDispatch();
-
-	const handleDeleteEvent = (e: any) => {
-		e.preventDefault();
-
-		dispatch(deleteCoin(id));
-		setDeleted(true);
-	};
-
+const UserCoin: FunctionComponent<Props> = ({ coin, handleDeleteEvent }) => {
 	return (
 		<div className='w-full bg-red-100 px-4 py-6 flex justify-between items-center'>
 			<div className='flex flex-col gap-2 items-center'>
-				<img src={logo} alt='Coin' className='rounded-full h-9 ' />
+				<img src={coin.logo} alt='Coin' className='rounded-full h-9 ' />
 				<p
 					className={
-						exchange === 'Binance'
+						coin.exchange === 'Binance'
 							? 'text-yellow-400 font-medium text-lg'
 							: 'text-green-300 font-medium text-lg'
 					}
 				>
-					{exchange}
+					{coin.exchange}
 				</p>
 			</div>
 			<p
 				className={
-					exchange === 'Binance'
+					coin.exchange === 'Binance'
 						? 'text-yellow-400 font-medium text-lg'
 						: 'text-green-300 font-medium text-lg'
 				}
 			>
-				{symbol}
+				{coin.symbol}
 			</p>
 			<div className='flex gap-10 items-center'>
 				<p
 					className={
-						exchange === 'Binance'
+						coin.exchange === 'Binance'
 							? 'text-yellow-400 font-medium text-lg'
 							: 'text-green-300 font-medium text-lg'
 					}
 				>
-					{amount.toFixed(2)}
+					{coin.amount.toFixed(2)}
 				</p>
 				<p
 					className={
-						exchange === 'Binance'
+						coin.exchange === 'Binance'
 							? 'text-yellow-400 font-medium text-lg'
 							: 'text-green-300 font-medium text-lg'
 					}
 				>
-					{price.toFixed(2)}
+					{coin.price.toFixed(2)}
 				</p>
 				<p
 					className={
-						exchange === 'Binance'
+						coin.exchange === 'Binance'
 							? 'text-yellow-400 font-medium text-lg'
 							: 'text-green-300 font-medium text-lg'
 					}
 				>
-					{(price * amount).toFixed(2)}
+					{(coin.price * coin.amount).toFixed(2)}
 				</p>
 			</div>
 			<div className='flex items-center gap-2'>
 				<button
 					className='rounded-full p-2 bg-red-700 hover:bg-white text-white hover:text-red-400 transform duration-200 hover:scale-125'
-					onClick={handleDeleteEvent}
+					onClick={() => handleDeleteEvent(coin.id)}
 				>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'

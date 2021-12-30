@@ -4,8 +4,11 @@ import * as api from '../api';
 
 export const getUserCoin = () => async (dispatch: any) => {
 	try {
-		const response: any = await api.getUserCoin();
-		dispatch({ type: 'FETCH_USER_COIN', payload: response.data.data });
+		const response: any = await api.getUserCoinApi();
+		dispatch({
+			type: 'FETCH_USER_COIN',
+			payload: response.data.data,
+		});
 	} catch (error: any) {
 		console.log(error.message);
 	}
@@ -13,8 +16,10 @@ export const getUserCoin = () => async (dispatch: any) => {
 
 export const addUserCoin = (coin: any) => async (dispatch: any) => {
 	try {
-		const data = await api.addUserCoin(coin);
-		dispatch({ type: 'ADD', payload: data });
+		console.log(coin);
+		const res: any = await api.addUserCoinApi(coin);
+		console.log(res);
+		dispatch({ type: 'ADD', payload: res.data.data });
 	} catch (error: any) {
 		console.log(error.message);
 	}
@@ -22,8 +27,7 @@ export const addUserCoin = (coin: any) => async (dispatch: any) => {
 
 export const deleteCoin = (id: string) => async (dispatch: any) => {
 	try {
-		await api.deleteCoin(id);
-
+		await api.deleteCoinApi(id);
 		dispatch({ type: 'DELETE', payload: id });
 	} catch (error) {
 		console.log('Delete Error: ', error);

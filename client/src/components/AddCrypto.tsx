@@ -2,29 +2,19 @@ import React, { FunctionComponent, useEffect, useState } from 'react';
 import { Select, Input, Loader } from '@mantine/core';
 import { useDispatch, useSelector } from 'react-redux';
 import { getExchange } from '../actions/exchanges';
-import { addUserCoin } from '../actions/wallet';
-import exchanges from '../reducers/exchanges';
 
-interface Props {}
+interface Props {
+	handleAddingCoin: any;
+}
 
-// Add Crypto Asset
-
-//         exchange - Binance ve kucoin
-
-//         symbol - (btc-usdt)
-
-//         amount - usd olarak
-
-const AddCrypto: FunctionComponent<Props> = () => {
+const AddCrypto: FunctionComponent<Props> = ({ handleAddingCoin }) => {
 	const [selectedExchange, setSelectedExchange] = useState<null | string>('');
-
-	const [postCoin, setPostCoin] = useState<any>({
-		exchangeName: '',
-		symbol: '',
-		amount: 0,
-	});
+	const [amount, setAmount] = useState<string>('');
+	const [exchange, setExchange] = useState<string>('');
+	const [coin, setCoin] = useState<string>('');
 
 	const dispatch = useDispatch();
+
 	useEffect(() => {
 		dispatch(getExchange());
 	}, [dispatch]);
@@ -51,25 +41,33 @@ const AddCrypto: FunctionComponent<Props> = () => {
 	};
 
 	const handleUSD = (e: any) => {
-		setPostCoin({ ...postCoin, amount: e.target.value });
+		setAmount(e.target.value);
 	};
 
 	const handleExchangeChange = (e: any) => {
 		setSelectedExchange(e);
-		setPostCoin({ ...postCoin, exchangeName: e });
+		setExchange(e);
 	};
 
 	const handleSymbolChange = (e: any) => {
-		setPostCoin({ ...postCoin, symbol: e });
+		setCoin(e);
 	};
 
-	const handleSubmit = async (e: any) => {
+	const handleSubmit = (e: any) => {
 		e.preventDefault();
-		dispatch(addUserCoin(postCoin));
+
+		handleAddingCoin({
+			exchangeName: exchange.trim(),
+			symbol: coin.trim(),
+			amount: amount.trim(),
+		});
+		setAmount('');
+		setExchange('');
+		setCoin('');
 	};
 
 	return (
-		<div className='bg-green-100 rounded-2xl py-4 px-10 flex flex-col items-start gap-7'>
+		<div className='bg-green-100 rounded-2xl py-4 px-8 flex flex-col items-start gap-7'>
 			{exchanges.length === 0 ? (
 				<Loader />
 			) : (
@@ -86,7 +84,8 @@ const AddCrypto: FunctionComponent<Props> = () => {
 							<Select
 								onChange={handleExchangeChange}
 								label='Exchange'
-								value={postCoin.exchange}
+								placeholder='Pick Your Exchange'
+								value={exchange}
 								clearable
 								nothingFound='Nobody here'
 								data={exchanges}
@@ -95,6 +94,7 @@ const AddCrypto: FunctionComponent<Props> = () => {
 								label='Coin'
 								placeholder='Pick Your Coin'
 								onChange={handleSymbolChange}
+								value={coin}
 								searchable
 								clearable
 								data={
@@ -104,16 +104,16 @@ const AddCrypto: FunctionComponent<Props> = () => {
 								}
 							/>
 						</div>
-						<div className='w-full flex justify-between gap-20'>
+						<div className='w-full flex justify-between space-x-4'>
 							<Input
 								variant='headless'
 								placeholder='Amount'
 								onChange={handleUSD}
+								value={amount}
 								required
 								styles={{
 									input: {
 										width: '100%',
-										boxSizing: 'border-box',
 										paddingTop: '1rem',
 										paddingBottom: '1rem',
 										textAlign: 'center',
@@ -122,7 +122,7 @@ const AddCrypto: FunctionComponent<Props> = () => {
 							/>
 							<button
 								type='submit'
-								className='py-4 px-10 bg-green-500 text-white hover:bg-green-700 hover:text-gray-300 '
+								className='py-4 px-7 bg-green-500 text-white hover:bg-green-700 hover:text-gray-300 '
 							>
 								Submit
 							</button>
