@@ -34,20 +34,14 @@ export class UserCryptoController {
                 walletId: userWallet.id,
                 exchangeId: exchange._id,
                 symbol,
-                firstPrice: 0,
-                lastPrice: 0,
+                firstPrice: avgPrice,
+                lastPrice: avgPrice,
                 amount
             });
 
             userWallet.cryptoIds.push(newUserCrypto.id);
-
-            newUserCrypto.firstPrice = avgPrice;
-            newUserCrypto.lastPrice = avgPrice;
-            await newUserCrypto.save();
             userWallet.balance += +((avgPrice * amount).toFixed(4));
             userWallet.balance = +(userWallet.balance.toFixed(4));
-
-
             await userWallet.save();
 
             return response.status(200).send(new SuccessResult("Crypto added successfully", newUserCrypto));
