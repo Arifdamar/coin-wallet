@@ -7,6 +7,7 @@ axios.defaults.withCredentials = true;
 export const fetchExchange = async () => {
 	try {
 		const response = await axios.get(`${url}/api/exchange`);
+
 		return response;
 	} catch (error: any) {
 		console.log(error.response);
@@ -17,8 +18,7 @@ export const fetchExchange = async () => {
 // Wallet
 export const getUserCoinApi = async () => {
 	try {
-		const response = await axios.get(`${url}/api/wallet`);
-		return response;
+		return await axios.get(`${url}/api/wallet`);
 	} catch (error: any) {
 		console.log(error.response);
 		return [];

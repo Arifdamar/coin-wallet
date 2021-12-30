@@ -1,16 +1,21 @@
 const wallet = (wallet: any = [], action: any) => {
 	switch (action.type) {
 		case 'FETCH_USER_COIN':
+			console.log('fetch: ', action.payload);
 			return action.payload;
 		case 'ADD':
-			return [...wallet.cryptos, action.payload];
+			console.log([...wallet.cryptos, action.payload]);
+			return [...wallet, action.payload];
 		case 'DELETE':
-			console.log('girdi delete', action.payload);
-			const a = wallet.cryptos?.filter(
+			console.log(
+				wallet.cryptos?.filter(
+					(coin: any) => coin.id !== action.payload
+				)
+			);
+
+			return wallet.cryptos?.filter(
 				(coin: any) => coin.id !== action.payload
 			);
-			console.log(a);
-			return a;
 
 		default:
 			return wallet;

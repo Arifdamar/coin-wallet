@@ -10,7 +10,7 @@ export const getUserCoin = () => async (dispatch: any) => {
 			payload: response.data.data,
 		});
 	} catch (error: any) {
-		console.log(error.message);
+		console.log('getUserCoin Error: ', error.message);
 	}
 };
 
@@ -19,7 +19,7 @@ export const addUserCoin = (coin: any) => async (dispatch: any) => {
 		console.log(coin);
 		const res: any = await api.addUserCoinApi(coin);
 		console.log(res);
-		dispatch({ type: 'ADD', payload: res.data.data });
+		dispatch({ type: 'ADD', payload: res.data });
 	} catch (error: any) {
 		console.log(error.message);
 	}

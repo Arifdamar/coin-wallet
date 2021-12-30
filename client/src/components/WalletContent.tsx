@@ -9,12 +9,23 @@ interface Props {}
 
 const WalletContent: FunctionComponent<Props> = ({}) => {
 	const dispatch = useDispatch();
+	const [change, setChange] = useState<boolean>(true);
+	const [isfetch, setIsfetch] = useState<boolean>(false);
 
-	const wallet: any = useSelector((state: any) => {
-		return state.wallet;
-	});
+	const wallet: any = useSelector((state: any) => state.wallet);
 
-	const cryptos: any = wallet.cryptos?.map((e: any) => {
+	const [currWallet, setCurrWallet] = useState(wallet);
+
+	useEffect(() => {
+		dispatch(getUserCoin());
+		setIsfetch(true);
+	}, [change, dispatch]);
+
+	useEffect(() => {
+		setCurrWallet(wallet);
+	}, [wallet, change]);
+
+	let cryptos: any = wallet.cryptos?.map((e: any) => {
 		return {
 			amount: e.amount,
 			exchange: e.exchange.name,
@@ -25,26 +36,32 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 			id: e.id,
 		};
 	});
-	useEffect(() => {
-		dispatch(getUserCoin());
-	}, [dispatch, wallet]);
+
+	if (isfetch) {
+		cryptos = currWallet.cryptos?.map((e: any) => {
+			return {
+				amount: e.amount,
+				exchange: e.exchange.name,
+				logo: e.exchange.logoUrl,
+				price: e.lastPrice,
+				firstPrice: e.firstPrice,
+				symbol: e.symbol,
+				id: e.id,
+			};
+		});
+		setIsfetch(false);
+	}
 
 	const handleDeleteCoin = (id: string) => {
 		if (window.confirm('Are you sure to delete your coin?')) {
 			dispatch(deleteCoin(id));
+			setChange(!change);
 		}
 	};
 
 	const handleAddingCoin = (coin: any) => {
-		console.log(
-			'a: ',
-			coin.exchangeName,
-			'b: ',
-			coin.symbol,
-			'c',
-			coin.amount
-		);
 		dispatch(addUserCoin(coin));
+		setChange(!change);
 	};
 
 	return (
@@ -94,19 +111,21 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 					</p>
 					<div className='flex items-end gap-4'>
 						<p className='font-display font-medium text-4xl'>
-							$ {wallet.balance}{' '}
+							$ {currWallet.balance}{' '}
 						</p>
 					</div>
 				</div>
 				<div className='flex w-full justify-between gap-12 max-h-96'>
 					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto'>
-						{cryptos?.map((coin: any) => (
-							<UserCoin
-								coin={coin}
-								handleDeleteEvent={handleDeleteCoin}
-								key={coin.id}
-							/>
-						))}
+						{cryptos?.length > 0
+							? cryptos?.map((coin: any) => (
+									<UserCoin
+										coin={coin}
+										handleDeleteEvent={handleDeleteCoin}
+										key={coin.id}
+									/>
+							  ))
+							: 'there is nothing here'}
 					</div>
 					<div>
 						<AddCrypto handleAddingCoin={handleAddingCoin} />
