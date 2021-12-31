@@ -61,7 +61,7 @@ const UserCoin: FunctionComponent<Props> = ({ coin, handleDeleteEvent }) => {
 			<div className='flex items-center gap-2'>
 				<button
 					className='rounded-full p-2 bg-red-700 hover:bg-white text-white hover:text-red-400 transform duration-200 hover:scale-125'
-					onClick={() => handleDeleteEvent(coin.id)}
+					onClick={(e) => handleDeleteEvent(coin.id, e)}
 				>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'

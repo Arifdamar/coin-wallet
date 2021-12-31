@@ -12,14 +12,13 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 	const [change, setChange] = useState<boolean>(true);
 	const [isfetch, setIsfetch] = useState<boolean>(false);
 
-	const wallet: any = useSelector((state: any) => state.wallet);
-
-	const [currWallet, setCurrWallet] = useState(wallet);
-
 	useEffect(() => {
 		dispatch(getUserCoin());
 		setIsfetch(true);
-	}, [change, dispatch]);
+	}, [dispatch]);
+	const wallet: any = useSelector((state: any) => state.wallet);
+
+	const [currWallet, setCurrWallet] = useState(wallet);
 
 	useEffect(() => {
 		setCurrWallet(wallet);
@@ -52,7 +51,8 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 		setIsfetch(false);
 	}
 
-	const handleDeleteCoin = (id: string) => {
+	const handleDeleteCoin = (id: string, e: any) => {
+		e.preventDefault();
 		if (window.confirm('Are you sure to delete your coin?')) {
 			dispatch(deleteCoin(id));
 			setChange(!change);
