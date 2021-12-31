@@ -19,10 +19,10 @@ export class WalletController {
                 select: "-symbols -createdAt -updatedAt"
             });
 
+            wallet.balance = 0;
             for (const userCrypto of userCryptos) {
                 const currentPrice = await CryptoPriceHelper.getPrice(userCrypto.exchange.baseApi + userCrypto.exchange.priceEndpoint + userCrypto.symbol, userCrypto.exchange.name);
 
-                wallet.balance -= +((userCrypto.lastPrice * userCrypto.amount).toFixed(4));
                 wallet.balance += +((currentPrice * userCrypto.amount).toFixed(4));
                 wallet.balance = +(wallet.balance.toFixed(4));
                 userCrypto.lastPrice = currentPrice;
