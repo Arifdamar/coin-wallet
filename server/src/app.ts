@@ -32,12 +32,11 @@ export class Api {
 		Api.app.set('trust proxy', 1);
 		Api.app.use(express.json());
 		Api.app.use(express.urlencoded({ extended: true }));
-		Api.app.use(
-			cors({
-				origin: 'http://localhost:3000',
-				credentials: true,
-			})
-		);
+		Api.app.use(cors({
+			origin: 'http://localhost:3000',
+			methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
+			credentials: true,
+		}));
 
 		Api.app.use(
 			session({
@@ -50,9 +49,10 @@ export class Api {
 				secret: config.secretKey,
 				cookie: {
 					maxAge: 1000 * 60 * 60 * 2,
-					sameSite: false,
-					secure: false
+					sameSite: "none",
+					secure: true,
 				},
+				proxy: true
 			})
 		);
 
