@@ -34,7 +34,7 @@ export class Api {
 		Api.app.use(express.urlencoded({ extended: true }));
 		Api.app.use(cors({
 			origin: 'http://localhost:3000',
-			methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+			methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS', 'HEAD'],
 			credentials: true,
 		}));
 
