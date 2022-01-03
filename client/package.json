@@ -1,6 +1,7 @@
 {
 	"name": "client",
 	"version": "0.1.0",
+	"proxy": "https://coin-wallet-8riwk.ondigitalocean.app",
 	"private": true,
 	"dependencies": {
 		"@craco/craco": "^6.4.2",

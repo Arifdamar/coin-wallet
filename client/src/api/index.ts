@@ -1,12 +1,9 @@
 import axios from 'axios';
 
-//const url = 'https://coin-wallet-8riwk.ondigitalocean.app';
-const url = 'http://localhost:8081';
-
 axios.defaults.withCredentials = true;
 export const fetchExchange = async () => {
 	try {
-		const response = await axios.get(`${url}/api/exchange`);
+		const response = await axios.get(`/api/exchange`);
 
 		return response;
 	} catch (error: any) {
@@ -18,7 +15,7 @@ export const fetchExchange = async () => {
 // Wallet
 export const getUserCoinApi = async () => {
 	try {
-		return await axios.get(`${url}/api/wallet`);
+		return await axios.get(`/api/wallet`);
 	} catch (error: any) {
 		console.log(error.response);
 		return [];
@@ -27,7 +24,7 @@ export const getUserCoinApi = async () => {
 
 export const addUserCoinApi = async (coin: any) => {
 	try {
-		const response = await axios.post(`${url}/api/userCrypto`, coin);
+		const response = await axios.post(`/api/userCrypto`, coin);
 		console.log('f', coin);
 		return response;
 	} catch (error) {
@@ -37,7 +34,7 @@ export const addUserCoinApi = async (coin: any) => {
 
 export const deleteCoinApi = async (id: string) => {
 	try {
-		await axios.delete(`${url}/api/userCrypto/${id}`);
+		await axios.delete(`/api/userCrypto/${id}`);
 	} catch (error) {
 		console.log('delete error: ', error);
 	}

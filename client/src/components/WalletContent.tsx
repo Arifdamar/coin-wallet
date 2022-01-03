@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUserCoin, deleteCoin, addUserCoin } from '../actions/wallet';
 import AddCrypto from './AddCrypto';
 import UserCoin from './UserCoin';
+import bitcoin from '../images/btc.svg';
 
 interface Props {}
 
@@ -116,7 +117,12 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 					</div>
 				</div>
 				<div className='flex w-full justify-between gap-12 max-h-96'>
-					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto'>
+					<img
+						src={bitcoin}
+						alt='btc'
+						className='absolute z-10 mx-auto'
+					/>
+					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto z-20'>
 						{cryptos?.length > 0
 							? cryptos?.map((coin: any) => (
 									<UserCoin

@@ -4,9 +4,6 @@ import { Input, PasswordInput } from '@mantine/core';
 import { useHistory } from 'react-router-dom';
 import { Alert } from '@mantine/core';
 
-//const baseURL = 'https://coin-wallet-8riwk.ondigitalocean.app';
-const baseURL = 'http://localhost:8081';
-
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -21,7 +18,7 @@ const Login = () => {
 
 	const login = async () => {
 		try {
-			const response = await axios.post(`${baseURL}/api/auth/login`, {
+			const response = await axios.post(`/api/auth/login`, {
 				email,
 				password,
 			});
@@ -41,7 +38,7 @@ const Login = () => {
 
 	const checkIsLoggedIn = async () => {
 		try {
-			const response = await axios.get(`${baseURL}/api/auth/me`);
+			const response = await axios.get(`/api/auth/me`);
 
 			if (response.data.status) {
 				history.push('/dashboard');
