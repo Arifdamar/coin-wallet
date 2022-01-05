@@ -1,4 +1,7 @@
-const wallet = (state: any = { items: { cryptos: [], balance: 0 } }, action: any) => {
+const wallet = (
+	state: any = { items: { cryptos: [], balance: 0 } },
+	action: any
+) => {
 	switch (action.type) {
 		case 'WALLET_REQUEST':
 			return { loading: true, items: {} }
@@ -13,8 +16,11 @@ const wallet = (state: any = { items: { cryptos: [], balance: 0 } }, action: any
 			return {
 				loading: false,
 				items: {
-					cryptos: [...state.items.cryptos, action.payload.newUserCrypto],
-					balance: action.payload.balance
+					cryptos: [
+						...state.items.cryptos,
+						action.payload.newUserCrypto,
+					],
+					balance: +action.payload.balance.toFixed(2),
 				},
 			}
 		case 'DELETE':
@@ -27,9 +33,14 @@ const wallet = (state: any = { items: { cryptos: [], balance: 0 } }, action: any
 					cryptos: state.items.cryptos?.filter(
 						(coin: any) => coin._id !== action.payload
 					),
-					balance: state.items.cryptos?.filter(
-						(coin: any) => coin._id !== action.payload
-					).reduce((acc: any, coin: any) => acc + coin.lastPrice * coin.amount, 0)
+					balance: +state.items.cryptos
+						?.filter((coin: any) => coin._id !== action.payload)
+						.reduce(
+							(acc: any, coin: any) =>
+								acc + coin.lastPrice * coin.amount,
+							0
+						)
+						.toFixed(2),
 				},
 			}
 
