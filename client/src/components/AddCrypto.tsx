@@ -1,74 +1,73 @@
-import React, { FunctionComponent, useEffect, useState } from 'react';
-import { Select, Input, Loader } from '@mantine/core';
-import { useDispatch, useSelector } from 'react-redux';
-import { getExchange } from '../actions/exchanges';
+import React, { FunctionComponent, useEffect, useState } from 'react'
+import { Select, Input, Loader } from '@mantine/core'
+import { useDispatch, useSelector } from 'react-redux'
 
-interface Props {
-	handleAddingCoin: any;
-}
+import { getExchange } from '../actions/exchanges'
+import { addUserCoin } from '../actions/walletChangesActions'
 
-const AddCrypto: FunctionComponent<Props> = ({ handleAddingCoin }) => {
-	const [selectedExchange, setSelectedExchange] = useState<null | string>('');
-	const [amount, setAmount] = useState<string>('');
-	const [exchange, setExchange] = useState<string>('');
-	const [coin, setCoin] = useState<string>('');
+interface Props {}
 
-	const dispatch = useDispatch();
+const AddCrypto: FunctionComponent<Props> = () => {
+	const [selectedExchange, setSelectedExchange] = useState<null | string>('')
+	const [amount, setAmount] = useState<string>('')
+	const [exchange, setExchange] = useState<string>('')
+	const [coin, setCoin] = useState<string>('')
+
+	const dispatch = useDispatch()
+	const { loading, exchanges }: any = useSelector(
+		(state: any) => state.exchanges
+	)
 
 	useEffect(() => {
-		dispatch(getExchange());
-	}, [dispatch]);
+		dispatch(getExchange())
+	}, [dispatch])
 
-	const exchanges: Array<any> = useSelector(
-		(state: any) => state.exchanges
-	).map((e: any) => e.name);
-
-	let exchangeCoins: Array<any> = useSelector(
-		(state: any) => state.exchanges
-	);
+	const handleAddingCoin = (coin: any) => {
+		dispatch(addUserCoin(coin))
+	}
 
 	const handleExchangeCoins = () => {
 		if (selectedExchange === null) {
-			return [''];
+			return ['']
 		} else {
-			const values = exchangeCoins
+			const values = exchanges
 				.filter((e: any) => {
-					return e.name === selectedExchange;
+					return e.name === selectedExchange
 				})
-				.map((e) => e.symbols);
-			return values[0];
+				.map((e: any) => e.symbols)
+			return values[0]
 		}
-	};
+	}
 
 	const handleUSD = (e: any) => {
-		setAmount(e.target.value);
-	};
+		setAmount(e.target.value)
+	}
 
 	const handleExchangeChange = (e: any) => {
-		setSelectedExchange(e);
-		setExchange(e);
-	};
+		setSelectedExchange(e)
+		setExchange(e)
+	}
 
 	const handleSymbolChange = (e: any) => {
-		setCoin(e);
-	};
+		setCoin(e)
+	}
 
 	const handleSubmit = (e: any) => {
-		e.preventDefault();
+		e.preventDefault()
 
 		handleAddingCoin({
 			exchangeName: exchange.trim(),
 			symbol: coin.trim(),
 			amount: amount.trim(),
-		});
-		setAmount('');
-		setExchange('');
-		setCoin('');
-	};
+		})
+		setAmount('')
+		setExchange('')
+		setCoin('')
+	}
 
 	return (
 		<div className='bg-green-100 rounded-2xl py-4 px-8 flex flex-col items-start gap-7'>
-			{exchanges.length === 0 ? (
+			{loading ? (
 				<Loader />
 			) : (
 				<>
@@ -88,7 +87,7 @@ const AddCrypto: FunctionComponent<Props> = ({ handleAddingCoin }) => {
 								value={exchange}
 								clearable
 								nothingFound='Nobody here'
-								data={exchanges}
+								data={exchanges.map((e: any) => e.name)}
 							/>
 							<Select
 								label='Coin'
@@ -131,7 +130,7 @@ const AddCrypto: FunctionComponent<Props> = ({ handleAddingCoin }) => {
 				</>
 			)}
 		</div>
-	);
-};
+	)
+}
 
-export default AddCrypto;
+export default AddCrypto

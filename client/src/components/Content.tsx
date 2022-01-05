@@ -1,23 +1,17 @@
-import React, { FunctionComponent, useEffect } from 'react';
-import FameCoins from './FameCoins';
-import CoinChart from './CoinChart';
-import MyTopCoins from './MyTopCoins';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserCoin } from '../actions/wallet';
+import { FunctionComponent } from 'react'
+import FameCoins from './FameCoins'
+import CoinChart from './CoinChart'
+import MyTopCoins from './MyTopCoins'
+import { Link } from 'react-router-dom'
 
+import { useSelector } from 'react-redux'
 interface Props {}
 
 const Content: FunctionComponent<Props> = () => {
-	const dispatch = useDispatch();
-
-	useEffect(() => {
-		dispatch(getUserCoin());
-	}, [dispatch]);
-
-	const walletBalance: any = useSelector((state: any) => {
-		return state.wallet.balance;
-	});
+	const { items }: any = useSelector((state: any) => {
+		return state.walletChanges
+	})
+	const walletBalance: any = items.balance
 
 	return (
 		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-6 py-6 flex gap-8'>
@@ -97,7 +91,7 @@ const Content: FunctionComponent<Props> = () => {
 				<FameCoins />
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Content;
+export default Content

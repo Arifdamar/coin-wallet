@@ -1,69 +1,29 @@
-import React, { FunctionComponent, useState, useEffect } from 'react';
+import React, { FunctionComponent, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserCoin } from '../actions/walletAction'
 
-import { useDispatch, useSelector } from 'react-redux';
-import { getUserCoin, deleteCoin, addUserCoin } from '../actions/wallet';
-import AddCrypto from './AddCrypto';
-import UserCoin from './UserCoin';
-import bitcoin from '../images/btc.svg';
+import { Loader } from '@mantine/core'
+
+import UserCoin from './UserCoin'
+import bitcoin from '../images/btc.svg'
+
+import AddCrypto from './AddCrypto'
 
 interface Props {}
 
-const WalletContent: FunctionComponent<Props> = ({}) => {
-	const dispatch = useDispatch();
-	const [change, setChange] = useState<boolean>(true);
-	const [isfetch, setIsfetch] = useState<boolean>(false);
+const WalletContent: FunctionComponent<Props> = () => {
+	const dispatch = useDispatch()
 
+	const { loading, items }: any = useSelector(
+		(state: any) => state.walletChanges
+	)
+	const { cryptos } = items
+	const { balance } = items
+	console.log(balance)
+	console.log(items)
 	useEffect(() => {
-		dispatch(getUserCoin());
-		setIsfetch(true);
-	}, [dispatch]);
-	const wallet: any = useSelector((state: any) => state.wallet);
-
-	const [currWallet, setCurrWallet] = useState(wallet);
-
-	useEffect(() => {
-		setCurrWallet(wallet);
-	}, [wallet, change]);
-
-	let cryptos: any = wallet.cryptos?.map((e: any) => {
-		return {
-			amount: e.amount,
-			exchange: e.exchange.name,
-			logo: e.exchange.logoUrl,
-			price: e.lastPrice,
-			firstPrice: e.firstPrice,
-			symbol: e.symbol,
-			id: e.id,
-		};
-	});
-
-	if (isfetch) {
-		cryptos = currWallet.cryptos?.map((e: any) => {
-			return {
-				amount: e.amount,
-				exchange: e.exchange.name,
-				logo: e.exchange.logoUrl,
-				price: e.lastPrice,
-				firstPrice: e.firstPrice,
-				symbol: e.symbol,
-				id: e.id,
-			};
-		});
-		setIsfetch(false);
-	}
-
-	const handleDeleteCoin = (id: string, e: any) => {
-		e.preventDefault();
-		if (window.confirm('Are you sure to delete your coin?')) {
-			dispatch(deleteCoin(id));
-			setChange(!change);
-		}
-	};
-
-	const handleAddingCoin = (coin: any) => {
-		dispatch(addUserCoin(coin));
-		setChange(!change);
-	};
+		dispatch(getUserCoin())
+	}, [dispatch])
 
 	return (
 		<div className='bg-white w-full md:w-3/4 xl:w-5/6 px-20 py-6 flex gap-8'>
@@ -111,35 +71,31 @@ const WalletContent: FunctionComponent<Props> = ({}) => {
 						Total balance
 					</p>
 					<div className='flex items-end gap-4'>
-						<p className='font-display font-medium text-4xl'>
-							$ {currWallet.balance}{' '}
-						</p>
+						{!loading && (
+							<p className='font-display font-medium text-4xl'>
+								$ {balance}{' '}
+							</p>
+						)}
 					</div>
 				</div>
 				<div className='flex w-full justify-between gap-12 max-h-96'>
-					<img
-						src={bitcoin}
-						alt='btc'
-						className='absolute z-10 mx-auto'
-					/>
-					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto z-20'>
-						{cryptos?.length > 0
-							? cryptos?.map((coin: any) => (
-									<UserCoin
-										coin={coin}
-										handleDeleteEvent={handleDeleteCoin}
-										key={coin.id}
-									/>
-							  ))
-							: 'there is nothing here'}
+					<img src={bitcoin} alt='btc' className='absolute mx-auto' />
+					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto z-20 justify-center items-center'>
+						{loading ? (
+							<Loader />
+						) : cryptos.length > 0 ? (
+							cryptos.map((coin: any) => (
+								<UserCoin coin={coin} key={coin.id} />
+							))
+						) : (
+							'there is nothing here'
+						)}
 					</div>
-					<div>
-						<AddCrypto handleAddingCoin={handleAddingCoin} />
-					</div>
+					<AddCrypto />
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default WalletContent;
+export default WalletContent

@@ -1,6 +1,6 @@
-import React, { FunctionComponent } from 'react';
-import Sidebar from '../components/Sidebar';
-import Content from '../components/Content';
+import React, { FunctionComponent } from 'react'
+import Sidebar from '../components/Sidebar'
+import Content from '../components/Content'
 
 interface Props {}
 
@@ -10,7 +10,7 @@ const Dashboard: FunctionComponent<Props> = () => {
 			<Sidebar selectedTab='Dashboard' />
 			<Content />
 		</div>
-	);
-};
+	)
+}
 
-export default Dashboard;
+export default Dashboard

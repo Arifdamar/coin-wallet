@@ -1,12 +1,15 @@
-const exchanges: any = (exchanges = [], action: any) => {
+const exchanges: any = (state = { exchanges: [] }, action: any) => {
 	switch (action.type) {
-		case 'FETCH_EXCHANGES':
-			return action.payload;
-		case 'CREATE':
-			return [...exchanges, action.payload];
-		default:
-			return exchanges;
-	}
-};
+		case 'FETCH_EXCHANGES_REQUEST':
+			return { loading: true, exchanges: [] }
+		case 'FETCH_EXCHANGES_SUCCESS':
+			return { loading: false, exchanges: action.payload }
+		case 'FETCH_EXCHANGES_FAIL':
+			return { loading: false, error: action.payload }
 
-export default exchanges;
+		default:
+			return state
+	}
+}
+
+export default exchanges

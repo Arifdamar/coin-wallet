@@ -1,56 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import { Input, PasswordInput } from '@mantine/core';
-import { useHistory } from 'react-router-dom';
-import { Alert } from '@mantine/core';
+import React, { useState, useEffect } from 'react'
+import axios from 'axios'
+import { Input, PasswordInput } from '@mantine/core'
+import { useHistory } from 'react-router-dom'
+import { Alert } from '@mantine/core'
 
 const Login = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
 
-	const [loginStatus, setLoginStatus] = useState(false);
-	const [isLoginFailed, setIsLoginFailed] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
+	const [loginStatus, setLoginStatus] = useState(false)
+	const [isLoginFailed, setIsLoginFailed] = useState(false)
+	const [errorMessage, setErrorMessage] = useState('')
 
-	const history = useHistory();
+	const history = useHistory()
 
-	axios.defaults.withCredentials = true;
+	axios.defaults.withCredentials = true
 
 	const login = async () => {
 		try {
 			const response = await axios.post(`/api/auth/login`, {
 				email,
 				password,
-			});
+			})
 
-			setLoginStatus(response.data.status);
+			setLoginStatus(response.data.status)
 			if (response.data.status) {
-				history.push('/dashboard');
+				history.push('/dashboard')
 			} else {
-				console.log(response.data.message);
+				console.log(response.data.message)
 			}
 		} catch (error: any) {
-			console.log('ErrorX:', error.response.data);
-			setErrorMessage(error.response.data.message);
-			setIsLoginFailed(true);
+			console.log('ErrorX:', error.response.data)
+			setErrorMessage(error.response.data.message)
+			setIsLoginFailed(true)
 		}
-	};
+	}
 
 	const checkIsLoggedIn = async () => {
 		try {
-			const response = await axios.get(`/api/auth/me`);
+			const response = await axios.get(`/api/auth/me`)
 
 			if (response.data.status) {
-				history.push('/dashboard');
+				history.push('/dashboard')
 			}
 		} catch (error) {
-			console.log('ErrorY: ', error);
+			console.log('ErrorY: ', error)
 		}
-	};
+	}
 
 	useEffect(() => {
-		checkIsLoggedIn();
-	}, []);
+		checkIsLoggedIn()
+	}, [])
 
 	return (
 		<div className='login-page w-full h-full flex justify-center items-center'>
@@ -82,7 +82,7 @@ const Login = () => {
 						placeholder='Your email'
 						radius='md'
 						onChange={(e: any) => {
-							setEmail(e.target.value);
+							setEmail(e.target.value)
 						}}
 					/>
 				</div>
@@ -92,7 +92,7 @@ const Login = () => {
 					<PasswordInput
 						radius='md'
 						onChange={(e: any) => {
-							setPassword(e.target.value);
+							setPassword(e.target.value)
 						}}
 						icon={
 							<svg
@@ -147,7 +147,7 @@ const Login = () => {
 				</div>
 			</div>
 		</div>
-	);
-};
+	)
+}
 
-export default Login;
+export default Login
