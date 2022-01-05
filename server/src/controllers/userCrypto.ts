@@ -44,7 +44,8 @@ export class UserCryptoController {
             userWallet.balance = +(userWallet.balance.toFixed(4));
             await userWallet.save();
 
-            return response.status(200).send(new SuccessResult("Crypto added successfully", newUserCrypto));
+            newUserCrypto.exchange = exchange;
+            return response.status(200).send(new SuccessResult("Crypto added successfully", { newUserCrypto: newUserCrypto, balance: userWallet.balance }));
         } catch (error: any) {
             if (error.isJoi) {
                 return response.status(400).send(new FailureResult("Validation error: " + error.message));

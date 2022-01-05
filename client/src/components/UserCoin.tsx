@@ -15,7 +15,7 @@ const UserCoin: FunctionComponent<Props> = ({ coin }) => {
 		}
 	}
 	return (
-		<div className='w-full bg-white border px-4 py-6 flex justify-between items-center'>
+		<div className='w-full bg-white border px-4 py-6 flex justify-between items-center rounded-xl'>
 			<div className='flex flex-col gap-2 items-center'>
 				<img
 					src={coin.exchange.logoUrl}

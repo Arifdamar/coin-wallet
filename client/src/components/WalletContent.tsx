@@ -80,7 +80,7 @@ const WalletContent: FunctionComponent<Props> = () => {
 				</div>
 				<div className='flex w-full justify-between gap-12 max-h-96'>
 					<img src={bitcoin} alt='btc' className='absolute mx-auto' />
-					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto z-20 justify-center items-center'>
+					<div className='flex flex-col gap-5 h-full w-full overflow-y-auto z-20 items-center'>
 						{loading ? (
 							<Loader />
 						) : cryptos.length > 0 ? (
