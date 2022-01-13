@@ -11,6 +11,11 @@ router.get("/", (_req: express.Request, res: express.Response) => {
   return res.status(200).json(new SuccessResult("API is up and running!", null));
 });
 
+router.get("/test", (req: express.Request, res: express.Response) => {
+  console.log(req.body);
+  return res.status(200).json(new SuccessResult("API is up and running!", null));
+});
+
 router.use("/auth", authRoutes);
 router.use("/wallet", walletRoutes);
 router.use("/exchange", exchangeRoutes);
