@@ -20,6 +20,6 @@ server.on("connection", (socket) => {
   });
 });
 
-server.listen(9000, () => {
-  console.log("Listening on port 9000", server.address());
+server.listen(1337, "104.16.243.78", () => {
+  console.log("Listening on port 1337", server.address());
 });
