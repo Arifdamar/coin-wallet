@@ -1,27 +1,25 @@
 _id: req_a13d02790afd4174b9df315f3cdc5f27
 type: Request
 parentId: fld_013ca8b998034545a8846d092e5a03c2
-modified: 1652186173750
+modified: 1652186390115
 created: 1652186173750
 url: "{{base_url}}/api/exchange/create"
 name: Create
 description: ""
 method: POST
 body:
-  mimeType: ""
-  text: "{\r
-
-    \    \"name\": \"KuCoin\",\r
-
-    \    \"baseApi\": \"https://api.kucoin.com/api/v1\",\r
-
-    \    \"symbolListEndpoint\": \"/symbols\"\r
-
-    }"
+  mimeType: application/json
+  text: |-
+    {
+        "name": "KuCoin",
+        "baseApi": "https://api.kucoin.com/api/v1",
+        "symbolListEndpoint": "/symbols"
+    }
 parameters: []
 headers:
   - name: Content-Type
     value: application/json
+    id: pair_dcacb78d99fa431c80d87af19c42b5d7
 authentication: {}
 metaSortKey: -1652186173750
 isPrivate: false

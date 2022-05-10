@@ -1,14 +1,14 @@
 _id: req_e1c9d4608750453397915eea27a8d2e4
 type: Request
 parentId: fld_fd4bd26e2c264c0cb94735755be87e08
-modified: 1652186178755
+modified: 1652186365569
 created: 1652186173762
 url: "{{base_url}}/api/auth/login"
 name: Login
 description: ""
 method: POST
 body:
-  mimeType: ""
+  mimeType: application/json
   text: |-
     {
         "email": "test@gmail.com",
