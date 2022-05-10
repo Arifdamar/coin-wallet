@@ -1,0 +1,13 @@
+_id: fld_83138f35219642f5822ea9d3a98e6897
+type: RequestGroup
+parentId: wrk_babe8a45db5f47c78c61b4e4adf9b209
+modified: 1652186225440
+created: 1652186173764
+name: API
+description: ""
+environment:
+  base_url: http://localhost:8182
+environmentPropertyOrder:
+  "&":
+    - base_url
+metaSortKey: -1652186173764

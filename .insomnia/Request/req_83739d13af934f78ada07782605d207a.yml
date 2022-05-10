@@ -1,0 +1,31 @@
+_id: req_83739d13af934f78ada07782605d207a
+type: Request
+parentId: fld_fd4bd26e2c264c0cb94735755be87e08
+modified: 1652186173763
+created: 1652186173763
+url: "{{base_url}}/api/auth/register"
+name: Register
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: "{\r
+
+    \    \"email\": \"omercagris@gmail.com\",\r
+
+    \    \"password\": \"12345\"\r
+
+    }"
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1652186173763
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,21 @@
+_id: req_1ed4927d7fb4438c935f596a7ab3fb52
+type: Request
+parentId: fld_87cb0f1bf6fb414a83b850993ceac94d
+modified: 1652186173756
+created: 1652186173756
+url: "{{base_url}}/api/wallet"
+name: Get
+description: Authenticated user can fetch it's own wallet.
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1652186173756
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,21 @@
+_id: req_8ecbe11fc34f4051a8e28661f3451140
+type: Request
+parentId: fld_013ca8b998034545a8846d092e5a03c2
+modified: 1652186173744
+created: 1652186173744
+url: "{{base_url}}/api/exchange/61ad7e888cfefab35b1ba858"
+name: Get One
+description: ""
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1652186173744
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

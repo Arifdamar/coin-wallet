@@ -1,0 +1,21 @@
+_id: req_eaa9514b0fc34641a5a102c9f8d59a5b
+type: Request
+parentId: fld_a63987be8a724e38b8321f61f757bc66
+modified: 1652186173753
+created: 1652186173753
+url: "{{base_url}}/api/userCrypto/61cc83a41c2bb8da5436b54a"
+name: Delete
+description: Authenticated user can delete it's own crypto record.
+method: DELETE
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1652186173753
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

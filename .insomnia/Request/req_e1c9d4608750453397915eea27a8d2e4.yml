@@ -1,0 +1,30 @@
+_id: req_e1c9d4608750453397915eea27a8d2e4
+type: Request
+parentId: fld_fd4bd26e2c264c0cb94735755be87e08
+modified: 1652186178755
+created: 1652186173762
+url: "{{base_url}}/api/auth/login"
+name: Login
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: |-
+    {
+        "email": "test@gmail.com",
+        "password": "12345"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+    id: pair_c01d00f1f6bd4823905f8f3009416dc1
+authentication: {}
+metaSortKey: -1652186173762
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

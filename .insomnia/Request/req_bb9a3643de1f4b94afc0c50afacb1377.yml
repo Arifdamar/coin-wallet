@@ -1,0 +1,22 @@
+_id: req_bb9a3643de1f4b94afc0c50afacb1377
+type: Request
+parentId: fld_fd4bd26e2c264c0cb94735755be87e08
+modified: 1652186173761
+created: 1652186173761
+url: "{{base_url}}/api/auth/me"
+name: Me
+description: Authenticated user can fetch it's own user data. Can be used to
+  test if authentication works properly.
+method: GET
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1652186173761
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

@@ -1,0 +1,33 @@
+_id: req_7de843b81b794d948eee67104e4c72ed
+type: Request
+parentId: fld_a63987be8a724e38b8321f61f757bc66
+modified: 1652186173754
+created: 1652186173754
+url: "{{base_url}}/api/userCrypto"
+name: Add
+description: Authenticated user can add new crypto coin records to it's own wallet.
+method: POST
+body:
+  mimeType: ""
+  text: "{\r
+
+    \    \"exchangeName\": \"KuCoin\",\r
+
+    \    \"symbol\": \"BTC-USDT\",\r
+
+    \    \"amount\": 1\r
+
+    }"
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1652186173754
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

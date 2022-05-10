@@ -1,0 +1,21 @@
+_id: req_2fa9ed906f1e43be83f4763316ba9457
+type: Request
+parentId: fld_fd4bd26e2c264c0cb94735755be87e08
+modified: 1652186173760
+created: 1652186173760
+url: "{{base_url}}/api/auth/logout"
+name: Logout
+description: Authenticated user can logout.
+method: POST
+body: {}
+parameters: []
+headers: []
+authentication: {}
+metaSortKey: -1652186173760
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

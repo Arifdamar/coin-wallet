@@ -1,0 +1,25 @@
+_id: req_37caac4e04b94a44b762eb38be02eabb
+type: Request
+parentId: fld_a63987be8a724e38b8321f61f757bc66
+modified: 1652186173753
+created: 1652186173753
+url: "{{base_url}}/api/userCrypto/61afc678149c06e6f2fc3365"
+name: Update
+description: Authenticated user can update it's own crypto records's amount.
+method: PATCH
+body:
+  mimeType: ""
+  text: "{\r\n    \"newAmount\": 0.0015\r\n}"
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1652186173753
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

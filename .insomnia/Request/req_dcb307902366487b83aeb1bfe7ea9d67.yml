@@ -1,0 +1,25 @@
+_id: req_dcb307902366487b83aeb1bfe7ea9d67
+type: Request
+parentId: fld_013ca8b998034545a8846d092e5a03c2
+modified: 1652186173751
+created: 1652186173751
+url: "{{base_url}}/api/exchange/refresh"
+name: Refresh
+description: ""
+method: POST
+body:
+  mimeType: ""
+  text: "{\r\n    \"name\": \"Binance\"\r\n}"
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+authentication: {}
+metaSortKey: -1652186173751
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
